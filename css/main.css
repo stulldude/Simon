@@ -1,5 +1,16 @@
+.choice {
+    width: 14vmin;
+}
+
+#c0 {
+    fill: yellow;
+}
 #c1 {
-    width: 100px;
-    fill: beige;
-    border: black;
+    fill: red;
+}
+#c2 {
+    fill: blue;
+}
+#c3 {
+    fill: green;
 }

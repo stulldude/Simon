@@ -9,6 +9,8 @@ let currIdx;
 let highScore = 0;
 /*----- cached element references -----*/
 /*----- event listeners -----*/
+document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
+document.querySelector('button').addEventListener('click', init);
 /*----- functions -----*/
 console.log('hi');
 
@@ -27,7 +29,9 @@ function render() {
 }
 
 function handleBtnClick(evt) {
-    playerInput(evt.value);
+    let num = parseInt(evt.target.id[1]);
+    console.log(num)
+    playerInput(num);
     compareChoices();
 }
 
@@ -54,6 +58,7 @@ function roundStart() {
 
 //takes a num and pushes it to the array
 function playerInput(choice) {
+    console.log(choice + typeof choice);
     playerArray.push(choice);
 }
 
