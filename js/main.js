@@ -1,10 +1,76 @@
 /*----- constants -----*/
+const AOO = 4;
+const TIME_LIT = 1000;
+const COLORS = {
+    
+}
 /*----- app's state (variables) -----*/
+let playerArray;
+let lightArray;
+let currIdx;
+let highScore;
 /*----- cached element references -----*/
 /*----- event listeners -----*/
 /*----- functions -----*/
+console.log('hi');
 
+// start of game, initializes variables
+function init() {
+    playerArray = [];
+    lightArray = [1, 1, 1];
+    currIdx = 0;
+    roundStart();
+    render();
+}
 
+function render() {
+
+}
+
+function handleBtnClick(evt) {
+    playerInput(evt.value);
+    if (playerArray[currIdx] === lightArray[currIdx]) {
+        currIdx++;
+        //light up the button
+        if (playerArray.length === lightArray.length)  roundStart();
+    } else {
+        //buttons disable
+
+    }
+}
+
+//called whenever the player gets the pattern correctly
+function roundStart() {
+    disableBtns();
+    let curr = 0;
+    playerArray = [];
+    lightArray.push(Math.floor(Math.random() * AOO));
+
+    lightArray.forEach(function(light) {
+        window.setTimeout(function() {
+            console.log('yo');
+            console.log(curr);
+            if (curr === lightArray.length) enableBtns();
+        }, (1000 + (curr * 1000))); 
+        curr++   
+    });
+    //enable buttons
+}
+
+//takes a num and pushes it to the array
+function playerInput(choice) {
+    playerArray.push(choice);
+}
+
+function disableBtns() {
+    console.log('-btn disabled-');
+    document.querySelectorAll('button').forEach(btn => btn.disabled = true);
+}
+
+function enableBtns() {
+    console.log('-btn engaged-');
+    document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+}
 
 /*
 single player so no players needed
@@ -36,5 +102,4 @@ Press start
             You lose will appear
             high score is updated if applicable
             start will reenable
-
 */
