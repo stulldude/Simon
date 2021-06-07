@@ -1,13 +1,23 @@
 /*----- constants -----*/
 const AOO = 4;
 const TIME_LIT = 1000;
-const COLORS = {}
+const CHOICE = {
+    c0: null,
+    c1: null,
+    c2: null,
+    c3: null
+}
 /*----- app's state (variables) -----*/
 let playerArray;
 let lightArray;
 let currIdx;
 let highScore = 0;
+let notPlayable = true;
 /*----- cached element references -----*/
+let c0 = document.getElementById('c0');
+let c1 = document.getElementById('c1');
+let c2 = document.getElementById('c2');
+let c3 = document.getElementById('c3');
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
 document.querySelector('button').addEventListener('click', init);
@@ -18,38 +28,57 @@ console.log('hi');
 function init() {
     playerArray = [];
     lightArray = [];
+    CHOICE.c0 = c0;
+    CHOICE.c1 = c1;
+    CHOICE.c2 = c2;
+    CHOICE.c3 = c3;
     console.log(`currIdx = ${currIdx} in init`)
     currIdx = 0;
     roundStart();
-    render();
 }
 
-function render() {
+function renderLight(light) {
+    CHOICE[`c${light}`].style.opacity = '1';
+    window.setTimeout(function() {
+        unrenderLight(light);
+    }, TIME_LIT - 200);
+}
 
+function unrenderLight(light) {
+    CHOICE[`c${light}`].style.opacity = '.6';
+}
+
+function unrenderLights() {
+    CHOICE.c0.style.opacity = '.6';
+    CHOICE.c1.style.opacity = '.6';
+    CHOICE.c2.style.opacity = '.6';
+    CHOICE.c3.style.opacity = '.6';
 }
 
 function handleBtnClick(evt) {
+    unrenderLights();
+    if (notPlayable) return;
     let num = parseInt(evt.target.id[1]);
-    console.log(num)
     playerInput(num);
     compareChoices();
 }
 
 //called whenever the player gets the pattern correctly
 function roundStart() {
-    disableBtns();
+    notPlayable = true;
     let timeOutAdd = 0;
-    console.log(`currIdx = ${currIdx} in round start.\nShould be 0`)
     playerArray = [];
     lightArray.push(Math.floor(Math.random() * AOO));
     
     lightArray.forEach(function(light) {
         window.setTimeout(function() {
             //render light
-            
-            if (currIdx === lightArray.length - 1) enableBtns();
-            console.log(currIdx + ' after if statement');
-        }, (TIME_LIT + (timeOutAdd * TIME_LIT))); 
+            renderLight(light);
+            if (currIdx === lightArray.length - 1) {
+                currIdx = 0;   
+                notPlayable = false;
+            }
+        }, timeOutAdd * TIME_LIT);
         timeOutAdd++   
     });
     //enable buttons
@@ -58,39 +87,27 @@ function roundStart() {
 
 //takes a num and pushes it to the array
 function playerInput(choice) {
+
     console.log(choice + typeof choice);
     playerArray.push(choice);
 }
 
 function compareChoices() {
-    console.log(currIdx);
-    console.log(playerArray[currIdx] + 'current guess');
-    console.log(lightArray[currIdx] + 'expected guess');
     if (playerArray[currIdx] === lightArray[currIdx]) {
+        renderLight(playerArray[currIdx]);
         currIdx++;
         //light up the button
-        if (playerArray.length === lightArray.length)  roundStart();
+        if (playerArray.length === lightArray.length) {
+            window.setTimeout(roundStart, TIME_LIT * 1.2);
+        }
     } else {
         //buttons disable
-        disableBtns();
+        notPlayable = true
         loss();
         //handle loss
 
         console.log('you lose!')
     } 
-}
-
-function disableBtns() {
-    currIdx = 0;
-    console.log('-btn disabled-');
-    document.querySelectorAll('button').forEach(btn => btn.disabled = true);
-}
-
-function enableBtns() {
-    currIdx = 0;
-    console.log(currIdx + ' in enableBtns')
-    console.log('-btn engaged-');
-    document.querySelectorAll('button').forEach(btn => btn.disabled = false);
 }
 
 function loss() {
