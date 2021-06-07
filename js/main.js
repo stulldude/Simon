@@ -27,32 +27,36 @@ function render() {
 
 }
 
-function handleBtnClick(evt) {
-    playerInput(evt.value);
+function handleBtnClick(num) {
+    playerInput(num);
     if (playerArray[currIdx] === lightArray[currIdx]) {
         currIdx++;
         //light up the button
         if (playerArray.length === lightArray.length)  roundStart();
     } else {
         //buttons disable
-
+        //handle loss
     }
 }
 
 //called whenever the player gets the pattern correctly
 function roundStart() {
     disableBtns();
-    let curr = 0;
+    let timeOutAdd = 0;
+    let currIdx = 0;
     playerArray = [];
     lightArray.push(Math.floor(Math.random() * AOO));
 
     lightArray.forEach(function(light) {
         window.setTimeout(function() {
-            console.log('yo');
-            console.log(curr);
-            if (curr === lightArray.length) enableBtns();
-        }, (1000 + (curr * 1000))); 
-        curr++   
+            //render light
+            console.log(`out of callback ${timeOutAdd}`);
+            console.log(`in callback ${currIdx}`);
+            console.log(`light array length ${lightArray.length}`)
+            if (currIdx === lightArray.length - 1) enableBtns();
+            currIdx++;
+        }, (TIME_LIT + (timeOutAdd * TIME_LIT))); 
+        timeOutAdd++   
     });
     //enable buttons
 }
