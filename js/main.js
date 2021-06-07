@@ -1,14 +1,12 @@
 /*----- constants -----*/
 const AOO = 4;
 const TIME_LIT = 1000;
-const COLORS = {
-    
-}
+const COLORS = {}
 /*----- app's state (variables) -----*/
 let playerArray;
 let lightArray;
 let currIdx;
-let highScore;
+let highScore = 0;
 /*----- cached element references -----*/
 /*----- event listeners -----*/
 /*----- functions -----*/
@@ -17,7 +15,8 @@ console.log('hi');
 // start of game, initializes variables
 function init() {
     playerArray = [];
-    lightArray = [1, 1, 1];
+    lightArray = [];
+    console.log(`currIdx = ${currIdx} in init`)
     currIdx = 0;
     roundStart();
     render();
@@ -27,38 +26,30 @@ function render() {
 
 }
 
-function handleBtnClick(num) {
-    playerInput(num);
-    if (playerArray[currIdx] === lightArray[currIdx]) {
-        currIdx++;
-        //light up the button
-        if (playerArray.length === lightArray.length)  roundStart();
-    } else {
-        //buttons disable
-        //handle loss
-    }
+function handleBtnClick(evt) {
+    playerInput(evt.value);
+    compareChoices();
 }
 
 //called whenever the player gets the pattern correctly
 function roundStart() {
     disableBtns();
     let timeOutAdd = 0;
-    let currIdx = 0;
+    console.log(`currIdx = ${currIdx} in round start.\nShould be 0`)
     playerArray = [];
     lightArray.push(Math.floor(Math.random() * AOO));
-
+    
     lightArray.forEach(function(light) {
         window.setTimeout(function() {
             //render light
-            console.log(`out of callback ${timeOutAdd}`);
-            console.log(`in callback ${currIdx}`);
-            console.log(`light array length ${lightArray.length}`)
+            
             if (currIdx === lightArray.length - 1) enableBtns();
-            currIdx++;
+            console.log(currIdx + ' after if statement');
         }, (TIME_LIT + (timeOutAdd * TIME_LIT))); 
         timeOutAdd++   
     });
     //enable buttons
+    //currIdx reset for player choices
 }
 
 //takes a num and pushes it to the array
@@ -66,16 +57,40 @@ function playerInput(choice) {
     playerArray.push(choice);
 }
 
+function compareChoices() {
+    console.log(currIdx);
+    console.log(playerArray[currIdx] + 'current guess');
+    console.log(lightArray[currIdx] + 'expected guess');
+    if (playerArray[currIdx] === lightArray[currIdx]) {
+        currIdx++;
+        //light up the button
+        if (playerArray.length === lightArray.length)  roundStart();
+    } else {
+        //buttons disable
+        disableBtns();
+        loss();
+        //handle loss
+
+        console.log('you lose!')
+    } 
+}
+
 function disableBtns() {
+    currIdx = 0;
     console.log('-btn disabled-');
     document.querySelectorAll('button').forEach(btn => btn.disabled = true);
 }
 
 function enableBtns() {
+    currIdx = 0;
+    console.log(currIdx + ' in enableBtns')
     console.log('-btn engaged-');
     document.querySelectorAll('button').forEach(btn => btn.disabled = false);
 }
 
+function loss() {
+    highScore = lightArray.length - 1 > highScore ? lightArray.length - 1 : highScore;
+}
 /*
 single player so no players needed
 constants:
