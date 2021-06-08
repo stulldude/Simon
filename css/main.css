@@ -1,3 +1,32 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    font-size: 15.5vmin;
+}
+
+#SVGHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#play {
+    position: absolute;
+    height: 4vmin;
+    width: 12vmin;
+    top: 41vmin;
+    right: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3vmin;
+    letter-spacing: .2vmin;
+}
+
 .choice {
     width: 22vmin;
 }
