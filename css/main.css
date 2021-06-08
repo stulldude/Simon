@@ -39,7 +39,6 @@ header {
     letter-spacing: .2vmin;
     color: var(--accent-text);
     background-color: var(--accent-dark);
-
 }
 
 .choice {
@@ -73,5 +72,27 @@ footer {
     padding-top: 3vmin;
     background-color: var(--accent-dark);
     color: var(--accent-text);
-    padding-bottom: 24vmin;
+    padding-bottom: 27vmin;
+    letter-spacing: 0.2vmin;
+    font-size: 2vmin;
+}
+
+@media only screen and (max-width: 320px){
+    header {
+        font-size: 17vmin;
+        letter-spacing: .2vmin;
+    }
+    .choice {
+        width: 40vmin;
+    }
+    #play {
+        top: 68vmin;
+        height: 12vmin;
+        width: 24vmin;
+        font-size: 7vmin;
+    }
+    footer {
+        font-size: 5vmin;
+        padding-bottom: 38vmin;
+    }
 }
