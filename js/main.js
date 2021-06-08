@@ -17,7 +17,8 @@ const CHOICE = {
 let playerArray;
 let lightArray;
 let currIdx;
-let highScore = 0;
+let highScore;
+let myStorage;
 let notPlayable = true;
 
 /*----- cached element references -----*/
@@ -34,17 +35,20 @@ document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
 document.querySelector('button').addEventListener('click', init);
 
 /*----- functions -----*/
+
 // start of game, assigns SVG 'buttons' to Choice object, 
 function init() {
     playerArray = [];
     lightArray = [];
+    myStorage = window.localStorage;
     CHOICE.c0.id = c0;
     CHOICE.c1.id = c1;
     CHOICE.c2.id = c2;
     CHOICE.c3.id = c3;
     currIdx = 0;
-    play.setAttribute('disabled', true);
+    setHighScore();
     roundStart();
+    play.setAttribute('disabled', true);
 }
 
 function renderLight(light) {
@@ -117,11 +121,18 @@ function compareChoices() {
 }
 
 function loss() {
-    highScore = lightArray.length - 1 > highScore ? lightArray.length - 1 : highScore;
-    ftr.innerText = `HIGH SCORE: ${highScore}`;
+    setHighScore();
     play.innerText = 'PLAY';
     play.removeAttribute('disabled');
     console.log('you lose!')
+}
+
+function setHighScore() {
+    highScore = myStorage.getItem('highScore');
+    if (!highScore) highScore = 0;
+    highScore = lightArray.length - 1 > highScore ? lightArray.length - 1 : highScore;
+    myStorage.setItem('highScore', `${highScore}`);
+    ftr.innerText = `HIGH SCORE: ${highScore}`;
 }
 
 function handleBeepBoop() {
