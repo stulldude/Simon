@@ -6,11 +6,12 @@ const ACTIVE_OPACITY = '.8';
 const BEEP = 'BEEP';
 const BOOP = 'BOOP';
 const CHOICE = {
-    c0: null,
-    c1: null,
-    c2: null,
-    c3: null
+    c0: {id: null, sound: 'sounds/Sound1.mp3'},
+    c1: {id: null, sound: 'sounds/Sound2.mp3'},
+    c2: {id: null, sound: 'sounds/Sound3.mp3'},
+    c3: {id: null, sound: 'sounds/Sound4.mp3'},
 }
+//const SOUND = 'https://freesound.org/data/previews/146/146722_2437358-lq.mp3'
 
 /*----- app's state (variables) -----*/
 let playerArray;
@@ -26,6 +27,7 @@ let c2 = document.getElementById('c2');
 let c3 = document.getElementById('c3');
 let ftr = document.querySelector('footer');
 let play = document.getElementById('play');
+const audioPlayer = new Audio();
 
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
@@ -36,31 +38,31 @@ document.querySelector('button').addEventListener('click', init);
 function init() {
     playerArray = [];
     lightArray = [];
-    CHOICE.c0 = c0;
-    CHOICE.c1 = c1;
-    CHOICE.c2 = c2;
-    CHOICE.c3 = c3;
+    CHOICE.c0.id = c0;
+    CHOICE.c1.id = c1;
+    CHOICE.c2.id = c2;
+    CHOICE.c3.id = c3;
     currIdx = 0;
     play.setAttribute('disabled', true);
     roundStart();
 }
 
 function renderLight(light) {
-    CHOICE[`c${light}`].style.opacity = ACTIVE_OPACITY;
+    CHOICE[`c${light}`].id.style.opacity = ACTIVE_OPACITY;
     window.setTimeout(function() {
         unrenderLight(light);
     }, TIME_LIT - 200);
 }
 
 function unrenderLight(light) {
-    CHOICE[`c${light}`].style.opacity = INACTIVE_OPACITY;
+    CHOICE[`c${light}`].id.style.opacity = INACTIVE_OPACITY;
 }
 
 function unrenderLights() {
-    CHOICE.c0.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c1.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c2.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c3.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c0.id.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c1.id.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c2.id.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c3.id.style.opacity = INACTIVE_OPACITY;
 }
 
 function handleBtnClick(evt) {   
@@ -82,6 +84,7 @@ function roundStart() {
         window.setTimeout(function() {
             handleBeepBoop();
             console.log(light + ' this is light')
+            playSound(light);
             renderLight(light);
             if (idx === lightArray.length - 1) {
                 currIdx = 0;   
@@ -101,9 +104,9 @@ function playerInput(choice) {
 
 function compareChoices() {
     if (playerArray[currIdx] === lightArray[currIdx]) {
+        playSound(playerArray[currIdx]);
         renderLight(playerArray[currIdx]);
         currIdx++;
-        //light up the button
         if (playerArray.length === lightArray.length) {
             window.setTimeout(roundStart, TIME_LIT * 1.2);
         }
@@ -123,4 +126,9 @@ function loss() {
 
 function handleBeepBoop() {
     play.innerText = play.innerText === BEEP ? BOOP : BEEP;
+}
+
+function playSound(light) {
+    audioPlayer.src = CHOICE[`c${light}`].sound;
+    audioPlayer.play();
 }
