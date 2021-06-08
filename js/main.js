@@ -1,8 +1,8 @@
 /*----- constants -----*/
 const AOO = 4;
 const TIME_LIT = 1000;
-const INACTIVE_OPACITY = '.4';
-const ACTIVE_OPACITY = '1';
+const INACTIVE_OPACITY = '.25';
+const ACTIVE_OPACITY = '.8';
 const BEEP = 'BEEP';
 const BOOP = 'BOOP';
 const CHOICE = {
@@ -41,6 +41,7 @@ function init() {
     CHOICE.c2 = c2;
     CHOICE.c3 = c3;
     currIdx = 0;
+    play.setAttribute('disabled', true);
     roundStart();
 }
 
@@ -115,6 +116,8 @@ function compareChoices() {
 function loss() {
     highScore = lightArray.length - 1 > highScore ? lightArray.length - 1 : highScore;
     ftr.innerText = `HIGH SCORE: ${highScore}`;
+    play.innerText = 'PLAY';
+    play.removeAttribute('disabled');
     console.log('you lose!')
 }
 

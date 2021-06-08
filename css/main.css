@@ -3,28 +3,43 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+:root {
+    --accent-dark: #74A4BC;
+    --accent-light: #B6D6CC;
+    --accent-text: #F1FEC6;
+}
+
 header {
     display: flex;
     justify-content: center;
     font-size: 15.5vmin;
+    background-color: var(--accent-dark);
+    padding-bottom: 2vmin;
+    color: var(--accent-text);
 }
 
 #SVGHolder {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--accent-light);
+    padding-top: 2vmin;
+    padding-bottom: 2vmin;
 }
 
 #play {
     position: absolute;
     height: 4vmin;
     width: 12vmin;
-    top: 41vmin;
+    top: 45vmin;
     right: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 3vmin;
     letter-spacing: .2vmin;
+    color: var(--accent-text);
+    background-color: var(--accent-dark);
+
 }
 
 .choice {
@@ -32,7 +47,7 @@ header {
 }
 
 path {
-    opacity: .4;
+    opacity: .25;
 }
 
 svg, g, path {
@@ -40,20 +55,23 @@ svg, g, path {
 }
 
 #c0 {
-    fill: yellow;
+    fill: #FFFF81;
 }
 #c1 {
-    fill: red;
+    fill: #FF3700;
 }
 #c2 {
-    fill: blue;
+    fill: #29339B;
 }
 #c3 {
-    fill: green;
+    fill: #00FF58;
 }
 
 footer {
     display: flex;
     justify-content: center;
-    margin-top: 3vmin;
+    padding-top: 3vmin;
+    background-color: var(--accent-dark);
+    color: var(--accent-text);
+    padding-bottom: 24vmin;
 }
