@@ -6,6 +6,10 @@ path {
     opacity: .6;
 }
 
+svg, g, path {
+    pointer-events: visiblePainted;
+}
+
 #c0 {
     fill: yellow;
 }

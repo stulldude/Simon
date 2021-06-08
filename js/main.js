@@ -32,7 +32,6 @@ function init() {
     CHOICE.c1 = c1;
     CHOICE.c2 = c2;
     CHOICE.c3 = c3;
-    console.log(`currIdx = ${currIdx} in init`)
     currIdx = 0;
     roundStart();
 }
@@ -56,9 +55,10 @@ function unrenderLights() {
 }
 
 function handleBtnClick(evt) {
-    unrenderLights();
-    if (notPlayable) return;
+    
+    if (notPlayable || !evt.target.id) return;
     let num = parseInt(evt.target.id[1]);
+    unrenderLights();
     playerInput(num);
     compareChoices();
 }
@@ -87,8 +87,6 @@ function roundStart() {
 
 //takes a num and pushes it to the array
 function playerInput(choice) {
-
-    console.log(choice + typeof choice);
     playerArray.push(choice);
 }
 
