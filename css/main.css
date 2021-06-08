@@ -32,7 +32,7 @@ header {
 }
 
 path {
-    opacity: .6;
+    opacity: .4;
 }
 
 svg, g, path {
@@ -50,4 +50,10 @@ svg, g, path {
 }
 #c3 {
     fill: green;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3vmin;
 }
