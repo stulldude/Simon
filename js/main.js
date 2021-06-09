@@ -20,7 +20,8 @@ let currIdx;
 let highScore;
 let myStorage;
 let notPlayable = true;
-
+let audioOnlyMode = false;
+let colorOnlyMode = false;
 /*----- cached element references -----*/
 let c0 = document.getElementById('c0');
 let c1 = document.getElementById('c1');
@@ -28,11 +29,13 @@ let c2 = document.getElementById('c2');
 let c3 = document.getElementById('c3');
 let ftr = document.querySelector('footer');
 let play = document.getElementById('play');
+let aMode = document.getElementById('aMode');
 const audioPlayer = new Audio();
 
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
-document.querySelector('button').addEventListener('click', init);
+play.addEventListener('click', init);
+aMode.addEventListener('click', handleAudioMode)
 
 /*----- functions -----*/
 
@@ -47,8 +50,12 @@ function init() {
     CHOICE.c3.id = c3;
     currIdx = 0;
     setHighScore();
-    roundStart();
+    if (audioOnlyMode) {
+        soundWarmUp();
+        setTimeout(roundStart, TIME_LIT * 4.5);
+    } else roundStart();
     play.setAttribute('disabled', true);
+    aMode.setAttribute('disabled', true)
 }
 
 function renderLight(light) {
@@ -89,7 +96,7 @@ function roundStart() {
             handleBeepBoop();
             console.log(light + ' this is light')
             playSound(light);
-            renderLight(light);
+            if (!audioOnlyMode) renderLight(light);
             if (idx === lightArray.length - 1) {
                 currIdx = 0;   
                 notPlayable = false;
@@ -109,7 +116,7 @@ function playerInput(choice) {
 function compareChoices() {
     if (playerArray[currIdx] === lightArray[currIdx]) {
         playSound(playerArray[currIdx]);
-        renderLight(playerArray[currIdx]);
+        if (!audioOnlyMode) renderLight(playerArray[currIdx]);
         currIdx++;
         if (playerArray.length === lightArray.length) {
             window.setTimeout(roundStart, TIME_LIT * 1.2);
@@ -124,6 +131,7 @@ function loss() {
     setHighScore();
     play.innerText = 'PLAY';
     play.removeAttribute('disabled');
+    aMode.removeAttribute('disabled');
     console.log('you lose!')
 }
 
@@ -140,6 +148,22 @@ function handleBeepBoop() {
 }
 
 function playSound(light) {
+    if (colorOnlyMode) return;
     audioPlayer.src = CHOICE[`c${light}`].sound;
     audioPlayer.play();
+}
+
+function handleAudioMode() {
+    audioOnlyMode = !audioOnlyMode;
+    console.log(audioOnlyMode);
+    aMode.innerText = audioOnlyMode ? 'AUDIO ONLY: ON ' : 'AUDIO ONLY: OFF'
+}
+
+function soundWarmUp() {
+    for (let i = 0; i < 4; i++) {
+        window.setTimeout(function() {
+            renderLight(i);
+            playSound(i);
+        }, TIME_LIT * i);
+    }
 }

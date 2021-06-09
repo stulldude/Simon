@@ -39,6 +39,7 @@ header {
     letter-spacing: .2vmin;
     color: var(--accent-text);
     background-color: var(--accent-dark);
+    text-align: center;
 }
 
 .choice {
@@ -66,13 +67,15 @@ svg, g, path {
     fill: #7FFF58;
 }
 
+
+
 footer {
     display: flex;
     justify-content: center;
     padding-top: 3vmin;
     background-color: var(--accent-dark);
     color: var(--accent-text);
-    padding-bottom: 27vmin;
+    padding-bottom: 14vmin;
     letter-spacing: 0.2vmin;
     font-size: 2vmin;
 }
