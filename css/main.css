@@ -2,7 +2,7 @@
     box-sizing: border-box;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
+/* ### PALETTE ### */
 :root {
     --accent-dark: #74A4BC;
     --accent-light: #B6D6CC;
@@ -13,6 +13,7 @@
     --color-g: #7FFF58;
 }
 
+/* ### HEADER ### */
 header {
     display: flex;
     justify-content: center;
@@ -22,6 +23,7 @@ header {
     color: var(--accent-text);
 }
 
+/* ### SVG ### */
 #SVGHolder {
     display: flex;
     flex-direction: column;
@@ -31,6 +33,32 @@ header {
     padding-bottom: 2vmin;
 }
 
+path {
+    opacity: .25;
+}
+
+svg, g, path {
+    pointer-events: visiblePainted;
+}
+
+.choice {
+    width: 22vmin;
+}
+
+#c0 {
+    fill: var(--color-y);
+}
+#c1 {
+    fill: var(--color-r);
+}
+#c2 {
+    fill: var(--color-b);
+}
+#c3 {
+    fill: var(--color-g);
+}
+
+/* ### BUTTON ### */
 #play {
     position: absolute;
     height: 4vmin;
@@ -57,31 +85,7 @@ button:hover {
     opacity: .8;
 }
 
-.choice {
-    width: 22vmin;
-}
-
-path {
-    opacity: .25;
-}
-
-svg, g, path {
-    pointer-events: visiblePainted;
-}
-
-#c0 {
-    fill: var(--color-y);
-}
-#c1 {
-    fill: var(--color-r);
-}
-#c2 {
-    fill: var(--color-b);
-}
-#c3 {
-    fill: var(--color-g);
-}
-
+/* ### SCORE AND MODE ### */
 #bottomHalf {
     display: flex;
     background-color: var(--accent-dark);
@@ -102,6 +106,7 @@ footer {
     text-align: center;
 }
 
+/* ### QUERRIES ### */
 @media only screen and (max-width: 520px){
     header {
         font-size: 17vmin;
