@@ -1,4 +1,4 @@
-# **SIMON**
+# <center>**SIMON**</center>
 
 This is an HTML / Javascript / CSS Simon game.
 
@@ -17,3 +17,7 @@ To play, all you need to do is click [HERE](https://stulldude.github.io/Simon/) 
     - implement web audio API to reduce audio files down to 1 and pitch shift to different notes
     - implement leaderboard through DB
     - implement difficulties and game modes (sound only, visual only, sped up)
+
+### HISTORY
+
+Simon the electronic game was inspired by the childrens game Simon Says as well as the ATARI game 'TOUCH ME'. The game is a near exact copy of the ATARI game, merely renamed. The game went on to inspire the legendary bopit.
