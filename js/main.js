@@ -16,6 +16,7 @@ const CHOICE = {
 let playerArray;
 let lightArray;
 let currIdx;
+let score;
 let highScore;
 let myStorage;
 let notPlayable = true;
@@ -40,12 +41,12 @@ aMode.addEventListener('click', handleAudioMode)
 mute.addEventListener('click', function() {muteMode = !muteMode})
 
 /*----- functions -----*/
-
 // start of game, assigns SVG 'buttons' to Choice object, 
 function init() {
     playerArray = [];
     lightArray = [];
     myStorage = window.localStorage;
+    score = 0;
     CHOICE.c0.id = c0;
     CHOICE.c1.id = c1;
     CHOICE.c2.id = c2;
@@ -58,6 +59,10 @@ function init() {
     } else roundStart();
     play.setAttribute('disabled', true);
     aMode.setAttribute('disabled', true)
+}
+
+function renderScore() {
+    ftr.innerText = `HIGH SCORE: ${highScore}\nSCORE: ${score}`;
 }
 
 function renderLight(light) {
@@ -97,13 +102,11 @@ function roundStart() {
     lightArray.forEach(function(light, idx) {
         window.setTimeout(function() {
             handleBeepBoop();
-            console.log(light + ' this is light')
             playSound(light);
             if (!audioOnlyMode) renderLight(light);
             if (idx === lightArray.length - 1) {
                 currIdx = 0;   
                 notPlayable = false;
-                console.log(notPlayable)
             }
         }, timeOutAdd * TIME_LIT);
         timeOutAdd++   
@@ -142,9 +145,10 @@ function loss() {
 function setHighScore() {
     highScore = myStorage.getItem('highScore');
     if (!highScore) highScore = 0;
-    highScore = lightArray.length - 1 > highScore ? lightArray.length - 1 : highScore;
+    score = lightArray.length > 0 ? lightArray.length - 1 : 0;
+    highScore = score > highScore ? score : highScore;
     myStorage.setItem('highScore', `${highScore}`);
-    ftr.innerText = `HIGH SCORE: ${highScore}`;
+    renderScore();
 }
 
 function handleBeepBoop() {
@@ -164,7 +168,6 @@ function handleAudioMode() {
         mute.setAttribute('disabled', 'true');
         muteMode = false;
     } else mute.removeAttribute('disabled');
-    console.log(audioOnlyMode);
     aMode.innerText = audioOnlyMode ? 'AUDIO ONLY: ON ' : 'AUDIO ONLY: OFF'
 }
 

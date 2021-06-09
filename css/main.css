@@ -82,6 +82,8 @@ svg, g, path {
     display: flex;
     background-color: var(--accent-dark);
     flex-direction: column;
+    align-items: center;
+    padding-bottom: 4vmin;
 }
 
 footer {
@@ -90,27 +92,28 @@ footer {
     padding-top: 3vmin;
     background-color: var(--accent-dark);
     color: var(--accent-text);
-    padding-bottom: 14vmin;
+    padding-bottom: 10vmin;
     letter-spacing: 0.2vmin;
     font-size: 2vmin;
+    text-align: center;
 }
 
-@media only screen and (max-width: 320px){
+@media only screen and (max-width: 520px){
     header {
         font-size: 17vmin;
         letter-spacing: .2vmin;
     }
     .choice {
-        width: 40vmin;
+        width: 36vmin;
     }
     #play {
-        top: 68vmin;
+        top: 62vmin;
         height: 12vmin;
         width: 24vmin;
         font-size: 7vmin;
     }
     footer {
         font-size: 5vmin;
-        padding-bottom: 38vmin;
+        padding-bottom: 34vmin;
     }
 }
