@@ -7,6 +7,10 @@
     --accent-dark: #74A4BC;
     --accent-light: #B6D6CC;
     --accent-text: #F1FEC6;
+    --color-y: #FFFF81;
+    --color-r: #FF3700;
+    --color-b: #29339B;
+    --color-g: #7FFF58;
 }
 
 header {
@@ -66,16 +70,16 @@ svg, g, path {
 }
 
 #c0 {
-    fill: #FFFF81;
+    fill: var(--color-y);
 }
 #c1 {
-    fill: #FF3700;
+    fill: var(--color-r);
 }
 #c2 {
-    fill: #29339B;
+    fill: var(--color-b);
 }
 #c3 {
-    fill: #7FFF58;
+    fill: var(--color-g);
 }
 
 #bottomHalf {

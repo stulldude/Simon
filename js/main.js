@@ -11,6 +11,7 @@ const CHOICE = {
     c2: {id: null, sound: 'sounds/Sound3.mp3'},
     c3: {id: null, sound: 'sounds/Sound4.mp3'},
 }
+const audioPlayer = new Audio();
 
 /*----- app's state (variables) -----*/
 let playerArray;
@@ -32,7 +33,6 @@ let ftr = document.querySelector('footer');
 let play = document.getElementById('play');
 let aMode = document.getElementById('aMode');
 let mute = document.getElementById('mute')
-const audioPlayer = new Audio();
 
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
@@ -57,8 +57,8 @@ function init() {
         soundWarmUp();
         setTimeout(roundStart, TIME_LIT * 4.5);
     } else roundStart();
-    play.setAttribute('disabled', true);
-    aMode.setAttribute('disabled', true)
+    disableEl(play);
+    disableEl(aMode);
 }
 
 function renderScore() {
@@ -70,6 +70,20 @@ function renderLight(light) {
     window.setTimeout(function() {
         unrenderLight(light);
     }, TIME_LIT - 200);
+}
+
+function renderPattern() {
+    lightArray.forEach(function(light, idx) {
+        window.setTimeout(function() {
+            handleBeepBoop();
+            playSound(light);
+            if (!audioOnlyMode) renderLight(light);
+            if (idx === lightArray.length - 1) {
+                currIdx = 0;   
+                notPlayable = false;
+            }
+        }, idx * TIME_LIT);
+    });
 }
 
 function unrenderLight(light) {
@@ -95,22 +109,9 @@ function handleBtnClick(evt) {
 // called whenever the player gets the pattern correct & on play
 function roundStart() {
     notPlayable = true;
-    let timeOutAdd = 0;
     playerArray = [];
     lightArray.push(Math.floor(Math.random() * AOO));
-    
-    lightArray.forEach(function(light, idx) {
-        window.setTimeout(function() {
-            handleBeepBoop();
-            playSound(light);
-            if (!audioOnlyMode) renderLight(light);
-            if (idx === lightArray.length - 1) {
-                currIdx = 0;   
-                notPlayable = false;
-            }
-        }, timeOutAdd * TIME_LIT);
-        timeOutAdd++   
-    });
+    renderPattern();
 }
 
 // takes a num and pushes it to the player array
@@ -165,7 +166,7 @@ function playSound(light) {
 function handleAudioMode() {
     audioOnlyMode = !audioOnlyMode;
     if (audioOnlyMode) {
-        mute.setAttribute('disabled', 'true');
+        disableEl(mute);
         muteMode = false;
     } else mute.removeAttribute('disabled');
     aMode.innerText = audioOnlyMode ? 'AUDIO ONLY: ON ' : 'AUDIO ONLY: OFF'
@@ -179,4 +180,8 @@ function soundWarmUp() {
             playSound(i);
         }, TIME_LIT * i);
     }
+}
+
+function disableEl(el) {
+    el.setAttribute('disabled', 'true');
 }
