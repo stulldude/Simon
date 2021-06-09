@@ -11,7 +11,6 @@ const CHOICE = {
     c2: {id: null, sound: 'sounds/Sound3.mp3'},
     c3: {id: null, sound: 'sounds/Sound4.mp3'},
 }
-//const SOUND = 'https://freesound.org/data/previews/146/146722_2437358-lq.mp3'
 
 /*----- app's state (variables) -----*/
 let playerArray;
@@ -39,6 +38,7 @@ document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
 play.addEventListener('click', init);
 aMode.addEventListener('click', handleAudioMode)
 mute.addEventListener('click', function() {muteMode = !muteMode})
+
 /*----- functions -----*/
 
 // start of game, assigns SVG 'buttons' to Choice object, 
@@ -71,6 +71,7 @@ function unrenderLight(light) {
     CHOICE[`c${light}`].id.style.opacity = INACTIVE_OPACITY;
 }
 
+// unrenders all lights so when player chooses quickly, previous lights arent still lit
 function unrenderLights() {
     CHOICE.c0.id.style.opacity = INACTIVE_OPACITY;
     CHOICE.c1.id.style.opacity = INACTIVE_OPACITY;
@@ -86,7 +87,7 @@ function handleBtnClick(evt) {
     compareChoices();
 }
 
-//called whenever the player gets the pattern correctly & on play
+// called whenever the player gets the pattern correct & on play
 function roundStart() {
     notPlayable = true;
     let timeOutAdd = 0;
@@ -109,12 +110,13 @@ function roundStart() {
     });
 }
 
-//takes a num and pushes it to the array
+// takes a num and pushes it to the player array
 function playerInput(choice) {
     playerArray.push(choice);
     handleBeepBoop();
 }
 
+// compares current choice to correct choice
 function compareChoices() {
     if (playerArray[currIdx] === lightArray[currIdx]) {
         playSound(playerArray[currIdx]);
@@ -155,6 +157,7 @@ function playSound(light) {
     audioPlayer.play();
 }
 
+// switches between audio only and normal. Also disables and falsifies mute functionality
 function handleAudioMode() {
     audioOnlyMode = !audioOnlyMode;
     if (audioOnlyMode) {
@@ -165,6 +168,7 @@ function handleAudioMode() {
     aMode.innerText = audioOnlyMode ? 'AUDIO ONLY: ON ' : 'AUDIO ONLY: OFF'
 }
 
+// lights up and sounds off each button before an audio only round
 function soundWarmUp() {
     for (let i = 0; i < 4; i++) {
         window.setTimeout(function() {
