@@ -21,7 +21,8 @@ let highScore;
 let myStorage;
 let notPlayable = true;
 let audioOnlyMode = false;
-let colorOnlyMode = false;
+let muteMode = false;
+
 /*----- cached element references -----*/
 let c0 = document.getElementById('c0');
 let c1 = document.getElementById('c1');
@@ -30,13 +31,14 @@ let c3 = document.getElementById('c3');
 let ftr = document.querySelector('footer');
 let play = document.getElementById('play');
 let aMode = document.getElementById('aMode');
+let mute = document.getElementById('mute')
 const audioPlayer = new Audio();
 
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
 play.addEventListener('click', init);
 aMode.addEventListener('click', handleAudioMode)
-
+mute.addEventListener('click', function() {muteMode = !muteMode})
 /*----- functions -----*/
 
 // start of game, assigns SVG 'buttons' to Choice object, 
@@ -148,13 +150,17 @@ function handleBeepBoop() {
 }
 
 function playSound(light) {
-    if (colorOnlyMode) return;
+    if (muteMode) return;
     audioPlayer.src = CHOICE[`c${light}`].sound;
     audioPlayer.play();
 }
 
 function handleAudioMode() {
     audioOnlyMode = !audioOnlyMode;
+    if (audioOnlyMode) {
+        mute.setAttribute('disabled', 'true');
+        muteMode = false;
+    } else mute.removeAttribute('disabled');
     console.log(audioOnlyMode);
     aMode.innerText = audioOnlyMode ? 'AUDIO ONLY: ON ' : 'AUDIO ONLY: OFF'
 }

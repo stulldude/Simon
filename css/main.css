@@ -36,10 +36,21 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 3vmin;
-    letter-spacing: .2vmin;
+}
+
+button {
     color: var(--accent-text);
     background-color: var(--accent-dark);
     text-align: center;
+    letter-spacing: .2vmin;
+}
+
+button:disabled {
+    pointer-events: none;
+}
+
+button:hover {
+    opacity: .8;
 }
 
 .choice {
@@ -67,7 +78,11 @@ svg, g, path {
     fill: #7FFF58;
 }
 
-
+#bottomHalf {
+    display: flex;
+    background-color: var(--accent-dark);
+    flex-direction: column;
+}
 
 footer {
     display: flex;
