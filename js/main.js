@@ -6,10 +6,10 @@ const ACTIVE_OPACITY = '.8';
 const BEEP = 'BEEP';
 const BOOP = 'BOOP';
 const CHOICE = {
-    c0: {id: null, sound: 'sounds/Sound1.mp3'},
-    c1: {id: null, sound: 'sounds/Sound2.mp3'},
-    c2: {id: null, sound: 'sounds/Sound3.mp3'},
-    c3: {id: null, sound: 'sounds/Sound4.mp3'},
+    c0: {el: null, sound: 'sounds/Sound1.mp3'},
+    c1: {el: null, sound: 'sounds/Sound2.mp3'},
+    c2: {el: null, sound: 'sounds/Sound3.mp3'},
+    c3: {el: null, sound: 'sounds/Sound4.mp3'},
 }
 const audioPlayer = new Audio();
 
@@ -25,40 +25,41 @@ let audioOnlyMode = false;
 let muteMode = false;
 
 /*----- cached element references -----*/
-let c0 = document.getElementById('c0');
-let c1 = document.getElementById('c1');
-let c2 = document.getElementById('c2');
-let c3 = document.getElementById('c3');
 let ftr = document.querySelector('footer');
 let play = document.getElementById('play');
 let aMode = document.getElementById('aMode');
 let mute = document.getElementById('mute')
+CHOICE.c0.el = document.getElementById('c0');
+CHOICE.c1.el = document.getElementById('c1');
+CHOICE.c2.el = document.getElementById('c2');
+CHOICE.c3.el = document.getElementById('c3');
 
 /*----- event listeners -----*/
 document.getElementById('SVGHolder').addEventListener('click', handleBtnClick);
-play.addEventListener('click', init);
+play.addEventListener('click', handleMode);
 aMode.addEventListener('click', handleAudioMode)
 mute.addEventListener('click', function() {muteMode = !muteMode})
 
 /*----- functions -----*/
+init();
+
 // start of game, assigns SVG 'buttons' to Choice object, 
 function init() {
     playerArray = [];
     lightArray = [];
     myStorage = window.localStorage;
     score = 0;
-    CHOICE.c0.id = c0;
-    CHOICE.c1.id = c1;
-    CHOICE.c2.id = c2;
-    CHOICE.c3.id = c3;
     currIdx = 0;
     setHighScore();
+}
+
+function handleMode() {
+    disableEl(play);
+    disableEl(aMode);
     if (audioOnlyMode) {
         soundWarmUp();
         setTimeout(roundStart, TIME_LIT * 4.5);
     } else roundStart();
-    disableEl(play);
-    disableEl(aMode);
 }
 
 function renderScore() {
@@ -66,7 +67,7 @@ function renderScore() {
 }
 
 function renderLight(light) {
-    CHOICE[`c${light}`].id.style.opacity = ACTIVE_OPACITY;
+    CHOICE[`c${light}`].el.style.opacity = ACTIVE_OPACITY;
     window.setTimeout(function() {
         unrenderLight(light);
     }, TIME_LIT - 200);
@@ -87,18 +88,18 @@ function renderPattern() {
 }
 
 function unrenderLight(light) {
-    CHOICE[`c${light}`].id.style.opacity = INACTIVE_OPACITY;
+    CHOICE[`c${light}`].el.style.opacity = INACTIVE_OPACITY;
 }
 
 // unrenders all lights so when player chooses quickly, previous lights arent still lit
 function unrenderLights() {
-    CHOICE.c0.id.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c1.id.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c2.id.style.opacity = INACTIVE_OPACITY;
-    CHOICE.c3.id.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c0.el.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c1.el.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c2.el.style.opacity = INACTIVE_OPACITY;
+    CHOICE.c3.el.style.opacity = INACTIVE_OPACITY;
 }
 
-function handleBtnClick(evt) {   
+function handleBtnClick(evt) {  
     if (notPlayable || !evt.target.id) return;
     let num = parseInt(evt.target.id[1]);
     unrenderLights();
