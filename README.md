@@ -5,7 +5,7 @@ This is an HTML / Javascript / CSS Simon game.
 To play, all you need to do is click [HERE](https://stulldude.github.io/Simon/) and press play!
 For an extra challenge, try audio only mode.
 
-<img lat="WOgit mAH" src="https://i.imgur.com/dODwq5F.png" width='300px'>
+<img lat="WOAH" src="https://i.imgur.com/dODwq5F.png" width='300px'>
 
 ## Technologies and Features
     - HTML / JS / CSS
