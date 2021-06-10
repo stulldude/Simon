@@ -53,14 +53,6 @@ function init() {
     setHighScore();
 }
 
-function handleMode() {
-    disableEl(play);
-    disableEl(aMode);
-    if (audioOnlyMode) {
-        soundWarmUp();
-        setTimeout(roundStart, TIME_LIT * 4.5);
-    } else roundStart();
-}
 
 function renderScore() {
     ftr.innerText = `HIGH SCORE: ${highScore}\nSCORE: ${score}`;
@@ -99,12 +91,13 @@ function unrenderLights() {
     CHOICE.c3.el.style.opacity = INACTIVE_OPACITY;
 }
 
-function handleBtnClick(evt) {  
-    if (notPlayable || !evt.target.id) return;
-    let num = parseInt(evt.target.id[1]);
-    unrenderLights();
-    playerInput(num);
-    compareChoices();
+function handleMode() {
+    disableEl(play);
+    disableEl(aMode);
+    if (audioOnlyMode) {
+        soundWarmUp();
+        setTimeout(roundStart, TIME_LIT * 4.5);
+    } else roundStart();
 }
 
 // called whenever the player gets the pattern correct & on play
@@ -113,6 +106,14 @@ function roundStart() {
     playerArray = [];
     lightArray.push(Math.floor(Math.random() * AOO));
     renderPattern();
+}
+
+function handleBtnClick(evt) {  
+    if (notPlayable || !evt.target.id) return;
+    let num = parseInt(evt.target.id[1]);
+    unrenderLights();
+    playerInput(num);
+    compareChoices();
 }
 
 // takes a num and pushes it to the player array
