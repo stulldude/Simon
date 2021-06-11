@@ -53,7 +53,6 @@ function init() {
     setHighScore();
 }
 
-
 function renderScore() {
     ftr.innerText = `HIGH SCORE: ${highScore}\nSCORE: ${score}`;
 }
@@ -142,6 +141,7 @@ function loss() {
     play.innerText = 'PLAY';
     play.removeAttribute('disabled');
     aMode.removeAttribute('disabled');
+    lightArray = []
     console.log('you lose!')
 }
 
